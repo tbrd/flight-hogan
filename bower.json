@@ -1,0 +1,22 @@
+{
+  "name": "flight-hogan",
+  "version": "0.0.1",
+  "dependencies": {
+    "flight": "~1.0.9",
+    "hogan": "~3.0.0"
+  },
+  "devDependencies": {
+    "jasmine-flight": "*",
+    "jasmine-jquery": "*"
+  },
+  "ignore": [
+    ".gitignore",
+    ".gitattributes",
+    ".travis.yml",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    "test",
+    "package.json",
+    "karma.conf.js"
+  ]
+}
