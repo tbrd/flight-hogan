@@ -1,7 +1,5 @@
 # flight-hogan
 
-[![Build Status](https://secure.travis-ci.org/<username>/flight-hogan.png)](http://travis-ci.org/<username>/flight-hogan)
-
 A [Flight](https://github.com/flightjs/flight) component for Hogan.
 
 ## Installation
@@ -12,6 +10,7 @@ bower install --save flight-hogan
 
 ## Example
 
+### String templates
 
 Instantiate the hogan component.
 
@@ -43,7 +42,8 @@ define(function () {
 
 ### Pre-compiled templates
 
-You can pass a hash of compiled templates as an option to the Hogan component
+You can pass a hash of compiled templates as an option to the Hogan component. You can generate
+compiled.js with [http://gruntjs.com/] and [https://github.com/vanetix/grunt-contrib-hogan].
 
 ```javascript
 var precompiledTemplates = require('/templates/compiled.js');
