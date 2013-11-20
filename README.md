@@ -76,6 +76,30 @@ define(function (require) {
 });
 ```
 
+## Partials
+
+Partials will be searched for in compiled templates, or you can pass string partials to `renderTemplate` (you can't pass compiled templates as flight can't serialize them into event data).
+
+```javascript
+define(function (require) {
+  var defineComponent = require('flight/lib/component');
+  var withHogan = require('flight-hogan/lib/with_hogan');
+
+  return defineComponent(myComponent, withHogan);
+
+  function myComponent () {
+    this.after('initialize', function() {
+      // render template with a partial
+      var helloWorld = this.renderTemplate({
+        template: 'hello {{>planet}}',
+        partials: {
+          planet: 'Mars'
+        }
+      });
+    });
+  }
+});
+```
 ## Development
 
 Development of this component requires [Bower](http://bower.io), and preferably
