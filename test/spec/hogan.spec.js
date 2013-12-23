@@ -81,5 +81,56 @@ describeComponent('lib/hogan', function () {
       });
     });
 
+	it('processes string partials', function () {
+      setupComponent();
+
+      var spy = spyOnEvent(this.component.$node, 'hogan-rendered-template');
+
+      this.component.$node.trigger('hogan-render-template', {
+        template: 'test {{>aPartial}}',
+        partials: {
+          aPartial: 'partial'
+        }
+      });
+
+      expect(spy).toHaveBeenTriggeredOn(this.component.$node);
+      expect(spy.callCount).toBe(1);
+      expect(spy.mostRecentCall.data).toEqual({
+        rendered: 'test partial',
+        request: {
+          template: 'test {{>aPartial}}',
+          partials: {
+            aPartial: 'partial'
+          }
+        }
+      });
+	});
+
+	it('processes compiled partials', function () {
+      var precompiledTemplates = {
+        aTemplate: Hogan.compile('test {{>aPartial}}'),
+        aPartial: Hogan.compile('partial')
+      };
+
+      setupComponent({
+        precompiledTemplates: precompiledTemplates
+      });
+
+      var spy = spyOnEvent(this.component.$node, 'hogan-rendered-template');
+
+      this.component.$node.trigger('hogan-render-template', {
+        templateName: 'aTemplate'
+      });
+
+      expect(spy).toHaveBeenTriggeredOn(this.component.$node);
+      expect(spy.callCount).toBe(1);
+      expect(spy.mostRecentCall.data).toEqual({
+        rendered: 'test partial',
+        request: {
+          templateName: 'aTemplate'
+        }
+      });
+	});
+
   });
 });
