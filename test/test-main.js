@@ -10,7 +10,7 @@ requirejs.config({
 
   paths: {
     'flight': 'bower_components/flight',
-    'hoganjs': 'bower_components/hogan/web/1.0.0/hogan'
+    'hoganjs': 'bower_components/hogan/web/builds/2.0.0/hogan-2.0.0.amd'
   },
 
   // ask Require.js to load these files (all our tests)
