@@ -8,6 +8,14 @@ A [Flight](https://github.com/flightjs/flight) component for Hogan templating.
 bower install --save flight-hogan
 ```
 
+## Require config
+
+requirejs.config({
+  paths: {
+    'hoganjs': 'bower_components/hogan/web/1.0.0/hogan'
+  }
+});
+
 ## Example
 
 Use the `with_hogan` mixin:
