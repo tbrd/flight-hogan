@@ -19,9 +19,8 @@ module.exports = function (config) {
       // loaded without require
       'bower_components/es5-shim/es5-shim.js',
       'bower_components/es5-shim/es5-sham.js',
-      'bower_components/jquery/jquery.js',
-      'bower_components/hogan/lib/template.js',
-      'bower_components/hogan/lib/compiler.js',
+      'bower_components/jquery/dist/jquery.js',
+      'bower_components/hogan/web/1.0.0/hogan.js',
       'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
       'bower_components/jasmine-flight/lib/jasmine-flight.js',
 
@@ -39,7 +38,7 @@ module.exports = function (config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['dots'],
+    reporters: ['progress'],
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,

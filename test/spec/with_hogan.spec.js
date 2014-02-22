@@ -5,33 +5,84 @@ describeMixin('lib/with_hogan', function () {
   beforeEach(setupComponent);
 
   describe('renderTemplate', function () {
-    it('should trigger hogan-render-template', function () {
-      var spy = spyOnEvent(this.component.$node, 'hogan-render-template');
+    describe('with string template', function () {
+      it('rendered the template with provided data', function () {
+        var html = this.component.renderTemplate({
 
-      this.component.renderTemplate({
-        template: 'foo'
+          template: 'plain old {{myVar}}',
+          renderParams: {
+            myVar: 'html'
+          }
+        });
+
+        expect(html).toEqual('plain old html');
       });
 
-      expect(spy).toHaveBeenTriggeredOn(this.component.$node);
-      expect(spy.callCount).toBe(1);
+      it('returns empty string on error', function () {
+        var html = this.component.renderTemplate({
+          template: 'plain old {{#noClosingTag}}'
+        });
+
+        expect(html).toEqual('');
+      });
     });
 
-    it('should respond to hogan-rendered-template and return rendered value', function () {
-      var request = {
-        template: 'foo'
+
+    it('uses pre-compiled template if available', function () {
+
+      var precompiledTemplates = {
+        posh: 'plain old {{myVar}}',
       };
 
-      // fake hogan-rendered from hogan component
-      this.component.$node.on('hogan-render-template', function(e, data) {
-        this.component.$node.trigger('hogan-rendered-template', {
-          rendered: 'bar',
-          request: data
-        });
-      }.bind(this));
+      setupComponent();
+      this.component.addTemplates(precompiledTemplates);
 
-      // renderTemplate should return 'bar'
-      expect(this.component.renderTemplate(request)).toEqual('bar');
+      var html = this.component.renderTemplate({
+        templateName: 'posh',
+          renderParams: {
+            myVar: 'html'
+          }
+      });
+      expect(html).toEqual('plain old html');
+    });
 
+    it('processes string partials', function () {
+      setupComponent();
+
+      var html = this.component.renderTemplate({
+        template: 'test {{>aPartial}}',
+        partials: {
+          aPartial: 'partial'
+        }
+      });
+
+      expect(html).toEqual('test partial');
+    });
+
+    it('processes compiled partials', function () {
+      var precompiledTemplates = {
+        aTemplate: Hogan.compile('test {{>aPartial}}'),
+        aPartial: Hogan.compile('partial')
+      };
+
+      setupComponent();
+      this.component.addTemplates(precompiledTemplates);
+
+      var html = this.component.renderTemplate({
+        templateName: 'aTemplate'
+      });
+
+      expect(html).toEqual('test partial');
+    });
+
+    it('shares compiledTemplates between instances', function () {
+      setupComponent();
+
+      var html = this.component.renderTemplate({
+        templateName: 'aTemplate'
+      });
+
+      expect(html).toEqual('test partial');
     });
   });
 });

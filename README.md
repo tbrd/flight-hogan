@@ -10,15 +10,6 @@ bower install --save flight-hogan
 
 ## Example
 
-### String templates
-
-Instantiate the hogan component.
-
-```javascript
-var hogan = require('flight-hogan/lib/hogan');
-hogan.attachTo(document);
-```
-
 Use the `with_hogan` mixin:
 
 ```javascript
@@ -30,12 +21,13 @@ define(function (require) {
 
   function myComponent () {
     this.after('initialize', function() {
-      var helloWorld = this.renderTemplate({
+      var html = this.renderTemplate({
         template: 'Hello, {{name}}!',
         renderParams: {
           name: 'World'
         }
       });
+      this.$node.html(html);
     });
   }
 });
@@ -43,17 +35,19 @@ define(function (require) {
 
 ### Pre-compiled templates
 
-You can pass a hash of compiled templates as an option to the Hogan component. You can generate
+You can pass a hash of compiled templates as an option to the Hogan Precompiled component. You can generate
 compiled.js with [Grunt](http://gruntjs.com/) using [grunt-contrib-hogan](https://github.com/vanetix/grunt-contrib-hogan).
 
 ```javascript
 var precompiledTemplates = require('templates/compiled');
-var hogan = require('flight-hogan/lib/hogan');
+var hoganPrecompiled = require('flight-hogan/lib/hogan_precompiled');
 
-hogan.attachTo(document, {
+hoganPrecompiled.attachTo(document, {
   precompiledTemplates: precompiledTemplates
 });
 ```
+
+Precompiled templates are then available from the withHogan mixin:
 
 ```javascript
 define(function (require) {
@@ -64,7 +58,7 @@ define(function (require) {
 
   function myComponent () {
     this.after('initialize', function() {
-      // render the 'hello_world' template from `templates/compiled.js`
+      // e.g., render a 'hello_world' template from `templates/compiled.js`
       var helloWorld = this.renderTemplate({
         templateName: 'hello_world',
         renderParams: {
