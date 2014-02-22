@@ -1,6 +1,6 @@
 {
   "name": "flight-hogan",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "devDependencies": {
     "karma": "~0.10.0",
     "karma-jasmine": "~0.1.0",
