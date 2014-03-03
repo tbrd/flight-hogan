@@ -29,12 +29,10 @@ define(function (require) {
 
   function myComponent () {
     this.after('initialize', function() {
-      var html = this.renderTemplate({
-        template: 'Hello, {{name}}!',
-        renderParams: {
-          name: 'World'
-        }
-      });
+      var html = this.renderTemplate(
+        'Hello, {{name}}!', {
+            name: 'World'
+          });
       this.$node.html(html);
     });
   }
@@ -67,12 +65,10 @@ define(function (require) {
   function myComponent () {
     this.after('initialize', function() {
       // e.g., render a 'hello_world' template from `templates/compiled.js`
-      var helloWorld = this.renderTemplate({
-        templateName: 'hello_world',
-        renderParams: {
+      var helloWorld = this.renderTemplate(
+        'hello_world', {
           name: 'World'
-        }
-      });
+        });
     });
   }
 });
@@ -92,12 +88,9 @@ define(function (require) {
   function myComponent () {
     this.after('initialize', function() {
       // render template with a partial
-      var helloWorld = this.renderTemplate({
-        template: 'hello {{>planet}}',
-        partials: {
+      var helloWorld = this.renderTemplate('hello {{>planet}}', {}, {
           planet: 'Mars'
-        }
-      });
+        });
     });
   }
 });
