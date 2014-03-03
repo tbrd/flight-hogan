@@ -11,12 +11,11 @@ describeComponent('lib/hogan_precompiled', function () {
           template1: 'Hello {{planetName}}'
         }
       });
-      var html = this.component.renderTemplate({
-        templateName: 'template1',
-        renderParams: {
+      var html = this.component.renderTemplate(
+        'template1',
+        {
           planetName: 'world'
-        }
-      });
+        });
       expect(html).toEqual('Hello world');
     });
   });

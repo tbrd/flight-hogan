@@ -7,29 +7,24 @@ describeMixin('lib/with_hogan', function () {
   describe('renderTemplate', function () {
     describe('with string template', function () {
       it('rendered the template with provided data', function () {
-        var html = this.component.renderTemplate({
-
-          template: 'plain old {{myVar}}',
-          renderParams: {
+        var html = this.component.renderTemplate(
+          'plain old {{myVar}}',
+          {
             myVar: 'html'
-          }
-        });
-
+          });
         expect(html).toEqual('plain old html');
       });
 
-      it('returns empty string on error', function () {
-        var html = this.component.renderTemplate({
-          template: 'plain old {{#noClosingTag}}'
-        });
-
-        expect(html).toEqual('');
+      it('throws on error', function () {
+        function render () {
+          this.component.renderTemplate('plain old {{#noClosingTag}}');
+        }
+        expect(render).toThrow();
       });
     });
 
 
     it('uses pre-compiled template if available', function () {
-
       var precompiledTemplates = {
         posh: 'plain old {{myVar}}',
       };
@@ -37,24 +32,23 @@ describeMixin('lib/with_hogan', function () {
       setupComponent();
       this.component.addTemplates(precompiledTemplates);
 
-      var html = this.component.renderTemplate({
-        templateName: 'posh',
-          renderParams: {
-            myVar: 'html'
-          }
-      });
+      var html = this.component.renderTemplate(
+        'posh',
+        {
+          myVar: 'html'
+        });
       expect(html).toEqual('plain old html');
     });
 
     it('processes string partials', function () {
       setupComponent();
 
-      var html = this.component.renderTemplate({
-        template: 'test {{>aPartial}}',
-        partials: {
+      var html = this.component.renderTemplate(
+        'test {{>aPartial}}',
+        {},
+        {
           aPartial: 'partial'
-        }
-      });
+        });
 
       expect(html).toEqual('test partial');
     });
@@ -68,20 +62,14 @@ describeMixin('lib/with_hogan', function () {
       setupComponent();
       this.component.addTemplates(precompiledTemplates);
 
-      var html = this.component.renderTemplate({
-        templateName: 'aTemplate'
-      });
+      var html = this.component.renderTemplate('aTemplate');
 
       expect(html).toEqual('test partial');
     });
 
     it('shares compiledTemplates between instances', function () {
       setupComponent();
-
-      var html = this.component.renderTemplate({
-        templateName: 'aTemplate'
-      });
-
+      var html = this.component.renderTemplate('aTemplate');
       expect(html).toEqual('test partial');
     });
   });
