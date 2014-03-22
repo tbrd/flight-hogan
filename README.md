@@ -10,11 +10,13 @@ bower install --save flight-hogan
 
 ## Require config
 
+```javascript
 requirejs.config({
   paths: {
     'hoganjs': 'bower_components/hogan/web/build/2.0.0/hogan-2.0.0.amd'
   }
 });
+```
 
 ## Example
 
